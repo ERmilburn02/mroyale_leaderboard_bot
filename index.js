@@ -11,9 +11,20 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setActivity('for wins', {type: "WATCHING"});
 });
-function checkForUser(name) {
-    if (db.has({name: name}).value()) {
-        console.log(db.find({name: name}));
+function dbStuff(name) {
+    let output = db.get('users').find({ name: name }).value();
+    console.log(output);
+    if(output === undefined) {
+        db.get('users').push({name: name, wins: 1}).write();
+    } else {
+        db.get('users').assign({name: name, wins: ++output.wins}).write();
     };
 };
-checkForUser('Mario');
+client.on('message', message => {
+    if (message.channel.id != "693316748296061019") return;
+    if (message.embeds[0] != null) return;
+    if (!message.embeds[0].description.includes("**#1**")) return;
+    let text = embed.description.substring(2);
+    text = text.substring(0, text.indexOf("**"));
+    dbStuff(text);
+});
