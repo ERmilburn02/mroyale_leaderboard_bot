@@ -9,7 +9,7 @@ const db = low(adapter)
 client.login(token);
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
-    client.user.setActivity('for wins', {type: "WATCHING"});
+    client.user.setActivity('mroyale.blusec.uk/db.json', {type: "WATCHING"});
 });
 function dbStuff(name) {
     let output = db.get('users').find({ name: name }).value();
