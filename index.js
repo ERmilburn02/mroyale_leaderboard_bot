@@ -22,9 +22,8 @@ function dbStuff(name) {
 };
 client.on('message', message => {
     if (message.channel.id != "693316748296061019") return;
-    if (message.embeds[0] != null) return;
     if (!message.embeds[0].description.includes("**#1**")) return;
-    let text = embed.description.substring(2);
+    let text = message.embeds[0].description.substring(2);
     text = text.substring(0, text.indexOf("**"));
     dbStuff(text);
 });
